@@ -1,19 +1,33 @@
 <?php
 
-$host= '70.39.234.36';
-$user = 'group8@saadittoh.com';
-$password = 'Yzxu9J8rg3hjdmGF';
-$ftpConn = ftp_connect($host);
-$login = ftp_login($ftpConn,$user,$password);
- 
- // check connection
-if ((!$ftpConn) || (!$login)) {
- echo 'FTP connection has failed! Attempted to connect to '. $host. ' for user '.$user.'.';
-} else{
- echo 'FTP connection was a success.';
- $directory = ftp_nlist($ftpConn,'');
- echo '<pre>'.print_r($directory, true).'</pre>';
+// PDO connection
+$dbopts = parse_url(getenv('DATABASE_URL'));
+$app->register(new Csanquer\Silex\PdoServiceProvider\Provider\PDOServiceProvider('pdo'),
+               array(
+                'pdo.server' => array(
+                   'driver'   => 'pgsql',
+                   'user' => $dbopts["user"],
+                   'password' => $dbopts["pass"],
+                   'host' => $dbopts["host"],
+                   'port' => $dbopts["port"],
+                   'dbname' => ltrim($dbopts["path"],'/')
+                   )
+               )
+);
 
-// ftp_close($ftpConn);
-//$con->close();
+// handler to query the database
+$app->get('/db/', function() use($app) {
+  $st = $app['pdo']->prepare('SELECT name FROM test_table');
+  $st->execute();
+
+  $names = array();
+  while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+    $app['monolog']->addDebug('Row ' . $row['name']);
+    $names[] = $row;
+  }
+
+  return $app['twig']->render('database.twig', array(
+    'names' => $names
+  ));
+});
 ?>
