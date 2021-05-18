@@ -2,7 +2,6 @@
 
 // PDO connection
 $dbopts = parse_url(getenv('DATABASE_URL'));
-echo $dbopts;
 $app->register(new Csanquer\Silex\PdoServiceProvider\Provider\PDOServiceProvider('pdo'),
                array(
                 'pdo.server' => array(
