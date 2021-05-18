@@ -1,4 +1,6 @@
 {
+  "name": "treescommunity/ict4d",
+  "description": "packages for our system",
   "require": {
     "robrichards/xmlseclibs": "3.1.*"
   }

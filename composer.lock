@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e097fb6144f764e68087dfa77638a260",
+    "content-hash": "d8086e07b538f3275df75db1ab9f1024",
     "packages": [
         {
             "name": "robrichards/xmlseclibs",
