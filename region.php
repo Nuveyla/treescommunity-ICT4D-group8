@@ -1,8 +1,17 @@
 <?php
 require ('php.php');
 
-$data_region = $_POST('region');
-//save data to log (optional)
-echo $data_region;
-$db_conn->query("INSERT INTO treesDB(region) VALUES ('$data_region')") ;
+// get region and session data
+$data_region = $_POST["region"];
+$sessionID = $_POST["sessionID"];
+
+// write to right row in db
+$result=pg_query($db_conn,"UPDATE treesDB SET REGION = '$data_region' WHERE SESSION='$sessionID'") ;
+
+if(!$result){
+  echo pg_last_error($db_conn);
+} else {
+  echo "Inserted successfully";
+}
+
 ?>

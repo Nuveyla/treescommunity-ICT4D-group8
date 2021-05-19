@@ -10,6 +10,6 @@ $db_conn = pg_connect("host = $hostname dbname = $dbname user = $username passwo
 # check connection
 if ($db_conn->connect_error)
 {
-die("Connection failed: " . $db_conn->connect_error);
+ die("Connection failed: " . $db_conn->connect_error);
 }
 ?>
